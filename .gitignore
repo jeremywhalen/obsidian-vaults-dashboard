@@ -2,4 +2,6 @@ node_modules/
 .DS_Store
 *.log
 vault-descriptions.json
+dev_notes/
+
 
