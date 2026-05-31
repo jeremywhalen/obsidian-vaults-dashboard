@@ -5,6 +5,24 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const vaultsDir = path.resolve(__dirname, '..');
+const descriptionsFile = path.join(__dirname, 'vault-descriptions.json');
+
+async function loadDescriptions() {
+  try {
+    const content = await fs.readFile(descriptionsFile, 'utf-8');
+    return JSON.parse(content);
+  } catch (err) {
+    return {};
+  }
+}
+
+async function saveDescriptions(descriptions) {
+  try {
+    await fs.writeFile(descriptionsFile, JSON.stringify(descriptions, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Failed to write descriptions file:', err);
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +58,7 @@ async function refreshCache() {
   const tempMdFiles = [];
 
   try {
+    const descriptions = await loadDescriptions();
     const entries = await fs.readdir(vaultsDir, { withFileTypes: true });
 
     for (const entry of entries) {
@@ -108,6 +127,7 @@ async function refreshCache() {
         tempVaults.push({
           name,
           path: vaultPath,
+          description: descriptions[name] || '',
           mdCount,
           mediaCount,
           totalCount,
@@ -214,6 +234,26 @@ app.get('/api/search', async (req, res) => {
   }
 
   res.json(results);
+});
+
+// API: Save vault description
+app.post('/api/vaults/description', async (req, res) => {
+  const { name, description } = req.body;
+  if (!name || typeof name !== 'string') {
+    return res.status(400).json({ error: 'Vault name is required' });
+  }
+
+  const descriptions = await loadDescriptions();
+  descriptions[name] = description || '';
+  await saveDescriptions(descriptions);
+
+  // Update in-memory cache directly
+  const vault = cachedVaults.find(v => v.name === name);
+  if (vault) {
+    vault.description = description || '';
+  }
+
+  res.json({ success: true, description: descriptions[name] });
 });
 
 // API: Manual refresh

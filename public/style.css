@@ -760,3 +760,120 @@ body {
 .snippet {
   word-break: break-word;
 }
+
+/* Vault Card Descriptions & Editing UI */
+.vault-desc-wrapper {
+  position: relative;
+  margin: 0.25rem 0 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-height: 2.4rem;
+}
+
+.vault-description {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.vault-description.empty {
+  color: var(--text-subtle);
+  font-style: italic;
+  cursor: pointer;
+}
+
+.vault-description.empty:hover {
+  color: var(--text-muted);
+}
+
+.btn-edit-desc {
+  background: transparent;
+  border: none;
+  color: var(--text-subtle);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vault-card:hover .btn-edit-desc {
+  opacity: 1;
+}
+
+.btn-edit-desc:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.desc-edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  margin: 0.25rem 0 0.5rem 0;
+}
+
+.desc-textarea {
+  width: 100%;
+  min-height: 54px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  resize: none;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.desc-textarea:focus {
+  border-color: var(--accent-primary);
+}
+
+.desc-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.btn-desc-action {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  font-family: var(--font-header);
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-desc-save {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+.btn-desc-save:hover {
+  background: #4f46e5;
+}
+
+.btn-desc-cancel {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border-card);
+}
+
+.btn-desc-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+

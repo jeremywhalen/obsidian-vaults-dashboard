@@ -80,8 +80,85 @@ function copyToClipboard(text, btnElement) {
     console.error('Failed to copy to clipboard:', err);
   });
 }
-// Bind to window for inline onclick handlers
 window.copyToClipboard = copyToClipboard;
+
+// Backup cache for Canceling description edits
+const descriptionBackupCache = {};
+
+// Action: Toggle edit mode for vault description
+function enterEditDescription(vaultName) {
+  const wrapper = document.getElementById(`desc-wrapper-${vaultName}`);
+  if (!wrapper) return;
+  
+  const textEl = document.getElementById(`desc-text-${vaultName}`);
+  const currentVal = textEl.classList.contains('empty') ? '' : textEl.textContent;
+  
+  // Backup current HTML
+  descriptionBackupCache[vaultName] = wrapper.innerHTML;
+  
+  wrapper.innerHTML = `
+    <div class="desc-edit-container">
+      <textarea class="desc-textarea" id="desc-input-${vaultName}" maxlength="150" placeholder="Write description (max 150 chars)...">${escapeHTML(currentVal)}</textarea>
+      <div class="desc-edit-actions">
+        <button class="btn-desc-action btn-desc-save" onclick="saveVaultDescription('${escapeJSString(vaultName)}')">Save</button>
+        <button class="btn-desc-action btn-desc-cancel" onclick="cancelEditDescription('${escapeJSString(vaultName)}')">Cancel</button>
+      </div>
+    </div>
+  `;
+  
+  const textarea = document.getElementById(`desc-input-${vaultName}`);
+  textarea.focus();
+  textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+}
+
+// Action: Cancel editing and restore original layout
+function cancelEditDescription(vaultName) {
+  const wrapper = document.getElementById(`desc-wrapper-${vaultName}`);
+  if (wrapper && descriptionBackupCache[vaultName]) {
+    wrapper.innerHTML = descriptionBackupCache[vaultName];
+    delete descriptionBackupCache[vaultName];
+  }
+}
+
+// Action: Save description to backend JSON file
+async function saveVaultDescription(vaultName) {
+  const input = document.getElementById(`desc-input-${vaultName}`);
+  if (!input) return;
+  const description = input.value.trim();
+  
+  try {
+    const res = await fetch('/api/vaults/description', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: vaultName, description })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      const wrapper = document.getElementById(`desc-wrapper-${vaultName}`);
+      
+      // Clear backup cache
+      delete descriptionBackupCache[vaultName];
+      
+      // Update card description text
+      wrapper.innerHTML = `
+        ${description 
+          ? `<span class="vault-description" id="desc-text-${escapeHTML(vaultName)}">${escapeHTML(description)}</span>` 
+          : `<span class="vault-description empty" id="desc-text-${escapeHTML(vaultName)}" onclick="enterEditDescription('${escapeJSString(vaultName)}')">Add a description...</span>`}
+        <button class="btn-edit-desc" onclick="enterEditDescription('${escapeJSString(vaultName)}')" title="Edit description">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+      `;
+    }
+  } catch (err) {
+    console.error('Failed to save description:', err);
+  }
+}
+
+// Bind to window for inline onclick handlers
+window.enterEditDescription = enterEditDescription;
+window.cancelEditDescription = cancelEditDescription;
+window.saveVaultDescription = saveVaultDescription;
 
 // Render chart using Chart.js
 function renderVaultChart(vaults) {
@@ -263,6 +340,15 @@ async function loadDashboardData() {
               <div class="vault-badge-icon">
                 <i class="fa-solid fa-book"></i>
               </div>
+            </div>
+            
+            <div class="vault-desc-wrapper" id="desc-wrapper-${escapeHTML(vault.name)}">
+              ${vault.description 
+                ? `<span class="vault-description" id="desc-text-${escapeHTML(vault.name)}">${escapeHTML(vault.description)}</span>` 
+                : `<span class="vault-description empty" id="desc-text-${escapeHTML(vault.name)}" onclick="enterEditDescription('${escapeJSString(vault.name)}')">Add a description...</span>`}
+              <button class="btn-edit-desc" onclick="enterEditDescription('${escapeJSString(vault.name)}')" title="Edit description">
+                <i class="fa-solid fa-pen"></i>
+              </button>
             </div>
             
             <div class="vault-stats-list">
