@@ -13,21 +13,18 @@ jobs:
 
     steps:
       - name: Checkout Code
-        # Pinned securely to v4.2.2
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
 
       - name: Bump version and push tag
         id: tag_version
-        # Pinned securely to the official v6.2.0 release commit
-        uses: mathieudutour/github-tag-action@a22cf084aa2cf351e50e9150175d35984c06b4ff
+        uses: mathieudutour/github-tag-action@a22cf08638b34d5badda920f9daf6e72c477b07b # v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create a GitHub Release
-        # Pinned securely to v7.0.1
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         env:
           CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
           NEW_TAG: ${{ steps.tag_version.outputs.new_tag }}
