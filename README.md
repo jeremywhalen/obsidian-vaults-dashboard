@@ -2,8 +2,8 @@
 
 A premium, local, self-contained web dashboard to oversee, monitor, and search across multiple Obsidian vaults from a single interface.
 
-> [!IMPORTANT] The server will scan your peer directories ( skipping folders starting with `.` or `_`)
->
+> [!IMPORTANT]
+> The server will scan your peer directories ( skipping folders starting with `.` or `_`)
 > ```
 > Example folder structure
 > My_Obsidian_Vaults
