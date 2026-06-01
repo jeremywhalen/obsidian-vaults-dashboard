@@ -4,6 +4,7 @@ A premium, local, self-contained web dashboard to oversee, monitor, and search a
 
 > [!IMPORTANT]
 > The server will scan your peer directories ( skipping folders starting with `.` or `_`)
+>
 > ```
 > Example folder structure
 > My_Obsidian_Vaults
@@ -26,7 +27,7 @@ This dashboard is designed to run locally on your machine and treats all your Ob
 
 ## ✨ Features
 
-- **📊 Unified Vault Statistics**: Displays total vault counts, note counts (`.md`), media files (`.png`, `.jpg`, `.pdf`, etc.), and total disk storage usage across all active vaults in a central location.
+- **📊 Unified Vault Statistics**: Displays total vault counts, note counts (`.md`)~~, media files (`.png`, `.jpg`, `.pdf`, etc.),~~ and total disk storage usage across all active vaults in a central location.
 - **📝 Local Vault Descriptions**: Add, edit, and save custom descriptions directly on each vault card. To respect the strict **read-only** nature of your vaults, descriptions are stored in a local, git-ignored configuration file (`vault-descriptions.json`), keeping your descriptions strictly private to your machine.
 - **📈 Notes Distribution Chart**: Interactive bar chart displaying notes count across all vaults using a **logarithmic scale** to elegantly balance visual disparities (e.g. tracking a vault with 700 notes next to one with 5 notes).
 - **🔗 Click-to-Open Obsidian URIs**: Click on a chart bar or card to launch that vault inside the Obsidian app immediately using path-based URIs (`obsidian://open?path=...`), bypassing pre-registration errors.
@@ -83,3 +84,32 @@ Open your browser and navigate to:
 ## ⚙️ Running in the Background on Startup
 
 If you want the dashboard to always run automatically in the background when your computer boots up, refer to the platform-specific guides in the [startup directory](startup/README.md).
+
+## 🗺️ Roadmap & Changelog
+
+### 🚀 Released
+
+- [x] **v0.2.1** — _Documentation & Asset Cleanup_
+  - 🧹 Deleted unused `assets/folder-structure.jpg` asset.
+  - 📝 Fixed formatting of callouts and notes in `README.md`.
+  - 📁 Added detailed folder structure guide and installation steps.
+  - ⚙️ Added local `dev_notes/` folder to `.gitignore`.
+- [x] **v0.2.0** — _Editable Local Vault Descriptions_
+  - ✨ Implemented editable description cards utilizing a local, git-ignored `vault-descriptions.json` storage model to protect vault privacy.
+  - 📝 Documented local vault customization features in the master layout.
+- [x] **v0.1.0** — _Initial Development Baseline_
+  - 📊 Built core dashboard rendering multi-vault tracking statistics.
+  - 📈 Implemented logarithmic scale charts via Chart.js for balanced note distribution views.
+  - 🔗 Integrated path-based Obsidian URIs (`obsidian://open?path=...`) for instant, error-free vault switching.
+  - 🔍 Added global cross-vault markdown query search engine.
+
+---
+
+### ⏳ Upcoming Features
+
+- [ ] **v0.2.2** — **Add Media File Count**: Add media file count to the dashboard.
+- [ ] **v0.2.3** — **Add Folder Blacklist Filter**: Add a configuration option to manually exclude specific folder paths from cross-vault scanning.
+- [ ] **v0.2.4** — **Add File Extension Exclusions**: Implement rules to filter out system meta-files (e.g., `.DS_Store`) from media totals.
+- [ ] **v0.2.5** — **Add Mobile-Responsive Optimization**: Refine glassmorphic CSS grids to adapt fluidly across mobile and tablet viewports.
+- [ ] **v0.2.6** — **Add Automated Release Pipeline**: Implement automated version tagging and release generation using GitHub Actions workflows.
+- [ ] **v0.2.7** — **Add Obsidian Plugin Integration**: Long-term exploration into compiling this into a native Obsidian community plugin wrapper.
