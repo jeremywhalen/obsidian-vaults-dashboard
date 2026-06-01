@@ -20,8 +20,8 @@ jobs:
 
       - name: Bump version and push tag
         id: tag_version
-        # Pinned to v6.2.0 (Immutable SHA)
-        uses: mathieudutour/github-tag-action@a2e007d4b4d96da04e287413697974da38aa90c7
+        # Pinned to official v6.2.0 release commit
+        uses: mathieudutour/github-tag-action@a22cf084aa2cf351e50e9150175d35984c06b4ff
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
