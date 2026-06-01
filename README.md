@@ -107,9 +107,9 @@ If you want the dashboard to always run automatically in the background when you
 
 ### ⏳ Upcoming Features
 
-- [ ] **v0.2.2** — **Add Media File Count**: Add media file count to the dashboard.
-- [ ] **v0.2.3** — **Add Folder Blacklist Filter**: Add a configuration option to manually exclude specific folder paths from cross-vault scanning.
-- [ ] **v0.2.4** — **Add File Extension Exclusions**: Implement rules to filter out system meta-files (e.g., `.DS_Store`) from media totals.
-- [ ] **v0.2.5** — **Add Mobile-Responsive Optimization**: Refine glassmorphic CSS grids to adapt fluidly across mobile and tablet viewports.
-- [ ] **v0.2.6** — **Add Automated Release Pipeline**: Implement automated version tagging and release generation using GitHub Actions workflows.
-- [ ] **v0.2.7** — **Add Obsidian Plugin Integration**: Long-term exploration into compiling this into a native Obsidian community plugin wrapper.
+- [x] **Add Automated Release Pipeline**: Implement automated version tagging and release generation using GitHub Actions workflows.
+- [ ] **Add Media File Count**: Add media file count to the dashboard.
+- [ ] **Add Folder Blacklist Filter**: Add a configuration option to manually exclude specific folder paths from cross-vault scanning.
+- [ ] **Add File Extension Exclusions**: Implement rules to filter out system meta-files (e.g., `.DS_Store`) from media totals.
+- [ ] **Add Mobile-Responsive Optimization**: Refine glassmorphic CSS grids to adapt fluidly across mobile and tablet viewports.
+- [ ] **Add Obsidian Plugin Integration**: Long-term exploration into compiling this into a native Obsidian community plugin wrapper.
